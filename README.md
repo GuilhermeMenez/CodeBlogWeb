@@ -50,7 +50,7 @@ Antes de começar, certifique-se de ter instalado:
 ## Instalação
 
 > **Importante**: Este projeto segue uma política de segurança para a cadeia de suprimentos.
-> Siga a documentação em `SECURITY.md` e `install-deps-security.md` para garantir a instalação segura das dependências e execute verificações de segurança antes de compilar ou publicar.
+> Siga [`docs/security.md`](docs/security.md) para instalar dependências com segurança e execute `npm run security:check` antes de compilar ou publicar.
 
 ### 1. Clone o repositório
 
@@ -62,22 +62,18 @@ cd code-blog-web
 ### 2. Instale as dependências
 
 ```bash
-npm run deps:ci
+npm ci
 ```
 
-### 2.1 Rebuild controlado de pacotes confiáveis (quando necessário)
-
-```bash
-npm run deps:rebuild:trusted
-```
+O `.npmrc` mantém `ignore-scripts=true`, então nenhum script de ciclo de vida de dependência é executado.
+Para adicionar um pacote: `npm install <pacote>@<x.y.z>` (versão exata; `save-exact` já é padrão).
 
 ### 3. Configure as variáveis de ambiente
 
-Crie um arquivo `.env` na raiz do projeto:
+Copie o modelo e ajuste os valores (o `.env` não é versionado):
 
-```env
-VITE_API_URL='http://localhost:8080/'
-VITE_ENABLE_MOCKS=false
+```bash
+cp .env.example .env
 ```
 
 ### 4. Inicie o servidor de desenvolvimento
@@ -95,27 +91,21 @@ A aplicação estará disponível em `http://localhost:5173`
 | Script     | Comando            | Descrição                                            |
 |------------|--------------------|------------------------------------------------------|
 | `start`    | `npm start`        | Inicia o servidor de desenvolvimento                 |
-| `build`    | `npm run build`    | Compila TypeScript e gera build de produção          |
+| `build`    | `npm run build`    | Valida o lockfile, compila TypeScript e gera build de produção |
 | `preview`  | `npm run preview`  | Visualiza o build de produção localmente             |
 | `lint`     | `npm run lint`     | Executa o ESLint para verificar problemas no código  |
 | `lint:fix` | `npm run lint:fix` | Executa o ESLint e corrige problemas automaticamente |
 | `format`   | `npm run format`   | Formata o código com Prettier                        |
-| `deps:ci`  | `npm run deps:ci`  | Instala dependências de forma determinística e segura |
-| `deps:add` | `npm run deps:add -- pacote@x.y.z` | Adiciona pacote com versão exata e sem scripts |
-| `deps:update-lock` | `npm run deps:update-lock` | Atualiza apenas o lockfile com scripts desabilitados |
-| `deps:audit:full` | `npm run deps:audit:full` | Executa auditoria completa de vulnerabilidades |
-| `security:scan` | `npm run security:scan` | Varredura de IOC e versões comprometidas do TanStack |
-| `security:check` | `npm run security:check` | Varredura + auditoria completa |
+| `security:lockfile` | `npm run security:lockfile` | Valida política do lockfile, `package.json` e `.npmrc` |
+| `security:audit` | `npm run security:audit` | `npm audit` (high) + verificação de assinaturas do registry |
+| `security:check` | `npm run security:check` | Lockfile + auditoria |
 
 ---
 
 ## Segurança de Dependências
 
-- Política resumida: `.github/SECURITY.md` (fallback: `SECURITY.md`)
-- Playbook completo: `security/install-deps-security.md`
-- Lista monitorada de versões comprometidas do TanStack: `security/tanstack-compromised-versions.txt`
-- Bloqueio de fluxo inseguro de instalação: `security/enforce-safe-install.cjs`
-- Scanner automatizado de supply chain: `security/scan-supply-chain.cjs`
+- Política, comandos e runbook de incidente: [`docs/security.md`](docs/security.md)
+- Checagem estrutural do lockfile: `scripts/check-lockfile.mjs`
 
 ---
 
