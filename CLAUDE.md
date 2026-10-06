@@ -12,7 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Dependency policy (supply-chain hardened)
 - `.npmrc` sets `ignore-scripts=true`, `save-exact=true`: use `npm ci` to install and `npm install pkg@x.y.z` to add. Never override `ignore-scripts`.
-- `npm run security:check` = `scripts/check-lockfile.mjs` (registry-only `resolved`, `integrity`, install-script allowlist, no git deps, exact versions incl. `overrides`, `.npmrc` intact) + `npm audit --audit-level=high` + `npm audit signatures`. The lockfile part (`security:lockfile`) is chained into `build` (not a `prebuild` hook: `ignore-scripts=true` skips pre/post scripts).
+- `npm run security:check` = `check-lockfile.mjs` (root) (registry-only `resolved`, `integrity`, install-script allowlist, no git deps, exact versions incl. `overrides`, `.npmrc` intact) + `npm audit --audit-level=high` + `npm audit signatures`. The lockfile part (`security:lockfile`) is chained into `build` (not a `prebuild` hook: `ignore-scripts=true` skips pre/post scripts).
 - Policy and incident runbook: `docs/security.md`.
 - Dependencies are pinned to exact versions; keep it that way. Don't add `preinstall`/`postinstall`/`prepare` scripts (the check fails on them).
 

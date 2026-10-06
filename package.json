@@ -14,7 +14,7 @@
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
     "format": "prettier --write .",
     "preview": "vite preview",
-    "security:lockfile": "node scripts/check-lockfile.mjs",
+    "security:lockfile": "node check-lockfile.mjs",
     "security:audit": "npm audit --audit-level=high && npm audit signatures",
     "security:check": "npm run security:lockfile && npm run security:audit"
   },
@@ -38,7 +38,7 @@
     "follow-redirects": "1.16.0",
     "js-yaml": "4.3.2",
     "postcss": "8.5.28",
-    "seroval": "1.5.6"
+    "seroval": "1.6.3"
   },
   "devDependencies": {
     "@eslint/js": "9.39.2",
