@@ -55,10 +55,7 @@ export function useUpdateProfile() {
     retry: false,
     onSuccess: (updatedProfile) => {
       // Atualiza cache do perfil
-      queryClient.setQueryData(
-        queryKeys.users.detail(updatedProfile.id),
-        updatedProfile
-      )
+      queryClient.setQueryData(queryKeys.users.detail(updatedProfile.id), updatedProfile)
 
       // Invalida dados do usuário autenticado
       queryClient.invalidateQueries({ queryKey: queryKeys.auth.me() })

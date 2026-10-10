@@ -84,7 +84,7 @@ export function OtpInput({
         ))}
       </OTPField.Root>
 
-      {error &&
+      {error && (
         <Field.Error
           data-slot="otp-error"
           match={!!error}
@@ -92,7 +92,7 @@ export function OtpInput({
         >
           {error}
         </Field.Error>
-      }
+      )}
     </Field.Root>
   )
 }

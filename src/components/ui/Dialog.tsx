@@ -22,7 +22,7 @@ const dialogContentVariants = tv({
     'transition-[opacity,scale] duration-200 will-change-[opacity,transform]',
     'data-open:opacity-100 data-open:scale-100',
     'data-closed:opacity-0 data-closed:scale-95',
-    'data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0'
+    'data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0',
   ],
   variants: {
     size: {
@@ -104,7 +104,7 @@ export function Dialog({
               >
                 {secondaryActionLabel}
               </Button>
-              
+
               <Button
                 type="button"
                 variant="primary"

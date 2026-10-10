@@ -20,11 +20,13 @@ export const followResponseSchema = z.object({
 
 // ======= Input Schemas (derived) =======
 
-export const updateProfileSchema = userProfileSchema.pick({
-  name: true,
-  bio: true,
-  avatar: true,
-}).partial()
+export const updateProfileSchema = userProfileSchema
+  .pick({
+    name: true,
+    bio: true,
+    avatar: true,
+  })
+  .partial()
 
 // ======= Inferred Types =======
 

@@ -21,7 +21,7 @@ api.interceptors.request.use(
 
     return config
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 )
 
 // Response interceptor
@@ -51,7 +51,7 @@ api.interceptors.response.use(
       createApiError({
         message: 'Connection error. Check your internet connection.',
         status: 0,
-      })
+      }),
     )
-  }
+  },
 )

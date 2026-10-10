@@ -56,7 +56,8 @@ function checkPackageJson() {
 
 function checkLockfile() {
   const lock = JSON.parse(read('package-lock.json'))
-  if (lock.lockfileVersion < 3) fail('package-lock.json', `lockfileVersion ${lock.lockfileVersion} < 3`)
+  if (lock.lockfileVersion < 3)
+    fail('package-lock.json', `lockfileVersion ${lock.lockfileVersion} < 3`)
 
   for (const [lockPath, meta] of Object.entries(lock.packages ?? {})) {
     if (lockPath === '' || meta.link) continue
@@ -64,7 +65,10 @@ function checkLockfile() {
     if (BUNDLED_WITHOUT_INTEGRITY.test(lockPath)) continue
 
     if (!meta.resolved?.startsWith(REGISTRY)) {
-      fail('package-lock.json', `${lockPath} resolve fora de ${REGISTRY} (${meta.resolved ?? 'sem resolved'})`)
+      fail(
+        'package-lock.json',
+        `${lockPath} resolve fora de ${REGISTRY} (${meta.resolved ?? 'sem resolved'})`,
+      )
     }
     if (!meta.integrity) fail('package-lock.json', `${lockPath} sem integrity`)
 
@@ -75,7 +79,10 @@ function checkLockfile() {
     for (const field of DEP_FIELDS) {
       for (const [name, spec] of Object.entries(meta[field] ?? {})) {
         if (/^(git|github|gitlab|bitbucket|https?|file|link):|^git\+|\//.test(String(spec))) {
-          fail('package-lock.json', `${lockPath} depende de ${name} via spec não-registry (${spec})`)
+          fail(
+            'package-lock.json',
+            `${lockPath} depende de ${name} via spec não-registry (${spec})`,
+          )
         }
       }
     }
@@ -83,7 +90,9 @@ function checkLockfile() {
 }
 
 function checkNpmrc() {
-  const lines = read('.npmrc').split(/\r?\n/).map((line) => line.trim())
+  const lines = read('.npmrc')
+    .split(/\r?\n/)
+    .map((line) => line.trim())
   for (const required of ['ignore-scripts=true', 'save-exact=true', 'package-lock=true']) {
     if (!lines.includes(required)) fail('.npmrc', `falta ${required}`)
   }

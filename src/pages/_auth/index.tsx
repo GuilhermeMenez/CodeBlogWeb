@@ -32,7 +32,11 @@ function Landing() {
           <div className="flex justify-between items-center w-full h-18.75">
             <Link to="/" className="flex items-center gap-4 rounded-xs focus-ring">
               <div className="hidden sm:flex pointer-events-none">
-                <img src="src/assets/svgs/brand-mark.svg" alt="Logo Code Blog" className="w-auto h-8" />
+                <img
+                  src="src/assets/svgs/brand-mark.svg"
+                  alt="Logo Code Blog"
+                  className="w-auto h-8"
+                />
               </div>
 
               <div className="pt-2 pointer-events-none ">
@@ -41,11 +45,19 @@ function Landing() {
             </Link>
 
             <nav className="flex items-center gap-4">
-              <Button variant="ghost" size="md" onClick={handleOpenAuthDialog.bind(null, 'sign-in')}>
+              <Button
+                variant="ghost"
+                size="md"
+                onClick={handleOpenAuthDialog.bind(null, 'sign-in')}
+              >
                 Entrar
               </Button>
 
-              <Button variant="primary" size="md" onClick={handleOpenAuthDialog.bind(null, 'sign-up')}>
+              <Button
+                variant="primary"
+                size="md"
+                onClick={handleOpenAuthDialog.bind(null, 'sign-up')}
+              >
                 Cadastre-se
               </Button>
             </nav>
@@ -69,13 +81,8 @@ function Landing() {
         </div>
       </div>
 
-      <Dialog
-        open={authDialogOpen}
-        onOpenChange={setAuthDialogOpen}
-        size="xl"
-        showCloseButton
-      > 
-        {formType === 'sign-in'? (
+      <Dialog open={authDialogOpen} onOpenChange={setAuthDialogOpen} size="xl" showCloseButton>
+        {formType === 'sign-in' ? (
           <SignIn setFormType={setFormType} />
         ) : (
           <SignUp setFormType={setFormType} />

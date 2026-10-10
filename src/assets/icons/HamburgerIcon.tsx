@@ -2,10 +2,10 @@ import type { SvgProps } from '@/assets/types'
 
 export function HamburgerIcon({ size, className, ...props }: SvgProps) {
   return (
-    <svg 
+    <svg
       width={size}
       height={size}
-      viewBox="0 0 17 12" 
+      viewBox="0 0 17 12"
       fill="none"
       className={className}
       xmlns="http://www.w3.org/2000/svg"

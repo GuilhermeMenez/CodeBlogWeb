@@ -12,10 +12,7 @@ export const authHandlers = [
     const user = findUserByEmail(body.email)
 
     if (!user || body.password !== 'password123') {
-      return HttpResponse.json(
-        { message: 'Invalid email or password' },
-        { status: 401 }
-      )
+      return HttpResponse.json({ message: 'Invalid email or password' }, { status: 401 })
     }
 
     return HttpResponse.json(
@@ -25,7 +22,7 @@ export const authHandlers = [
         email: user.email,
         avatar: user.avatar,
         createdAt: user.createdAt,
-      })
+      }),
     )
   }),
 
@@ -38,10 +35,7 @@ export const authHandlers = [
     // Check if email already exists
     const existingUser = findUserByEmail(body.email)
     if (existingUser) {
-      return HttpResponse.json(
-        { message: 'Email already registered' },
-        { status: 409 }
-      )
+      return HttpResponse.json({ message: 'Email already registered' }, { status: 409 })
     }
 
     const newUser = {
@@ -61,10 +55,7 @@ export const authHandlers = [
     const authHeader = request.headers.get('Authorization')
 
     if (!authHeader?.startsWith('Bearer ')) {
-      return HttpResponse.json(
-        { message: 'Unauthorized' },
-        { status: 401 }
-      )
+      return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
     return HttpResponse.json(currentUser)
@@ -83,10 +74,7 @@ export const authHandlers = [
     const authHeader = request.headers.get('Authorization')
 
     if (!authHeader?.startsWith('Bearer ')) {
-      return HttpResponse.json(
-        { message: 'Unauthorized' },
-        { status: 401 }
-      )
+      return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
     return HttpResponse.json({

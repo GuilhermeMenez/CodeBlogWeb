@@ -62,15 +62,20 @@ export const queryKeys = {
     feed: (params?: Record<string, unknown>) => [...queryKeys.posts.all, 'feed', params] as const,
     details: () => [...queryKeys.posts.all, 'detail'] as const,
     detail: (id: string) => [...queryKeys.posts.details(), id] as const,
-    byAuthor: (authorId: string, params?: Record<string, unknown>) => [...queryKeys.posts.all, 'author', authorId, params] as const,
-    search: (query: string, params?: Record<string, unknown>) => [...queryKeys.posts.all, 'search', query, params] as const,
+    byAuthor: (authorId: string, params?: Record<string, unknown>) =>
+      [...queryKeys.posts.all, 'author', authorId, params] as const,
+    search: (query: string, params?: Record<string, unknown>) =>
+      [...queryKeys.posts.all, 'search', query, params] as const,
   },
   users: {
     all: ['users'] as const,
     details: () => [...queryKeys.users.all, 'detail'] as const,
     detail: (id: string) => [...queryKeys.users.details(), id] as const,
-    followers: (userId: string, params?: Record<string, unknown>) => [...queryKeys.users.all, 'followers', userId, params] as const,
-    following: (userId: string, params?: Record<string, unknown>) => [...queryKeys.users.all, 'following', userId, params] as const,
-    search: (query: string, params?: Record<string, unknown>) => [...queryKeys.users.all, 'search', query, params] as const,
+    followers: (userId: string, params?: Record<string, unknown>) =>
+      [...queryKeys.users.all, 'followers', userId, params] as const,
+    following: (userId: string, params?: Record<string, unknown>) =>
+      [...queryKeys.users.all, 'following', userId, params] as const,
+    search: (query: string, params?: Record<string, unknown>) =>
+      [...queryKeys.users.all, 'search', query, params] as const,
   },
 } as const

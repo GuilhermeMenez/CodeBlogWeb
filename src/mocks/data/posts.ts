@@ -194,6 +194,6 @@ export function searchPosts(query: string): Post[] {
     (p) =>
       p.title.toLowerCase().includes(lowerQuery) ||
       p.content.toLowerCase().includes(lowerQuery) ||
-      p.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery))
+      p.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery)),
   )
 }

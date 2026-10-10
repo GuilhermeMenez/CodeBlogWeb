@@ -17,19 +17,28 @@ export const usersApi = {
     return userProfileSchema.parse(response.data)
   },
 
-  search: async (query: string, params?: PaginationParams): Promise<PaginatedResponse<UserProfile>> => {
+  search: async (
+    query: string,
+    params?: PaginationParams,
+  ): Promise<PaginatedResponse<UserProfile>> => {
     const response = await api.get('/users/search', {
       params: { q: query, ...params },
     })
     return paginatedUsersSchema.parse(response.data)
   },
 
-  getFollowers: async (userId: string, params?: PaginationParams): Promise<PaginatedResponse<UserProfile>> => {
+  getFollowers: async (
+    userId: string,
+    params?: PaginationParams,
+  ): Promise<PaginatedResponse<UserProfile>> => {
     const response = await api.get(`/users/${userId}/followers`, { params })
     return paginatedUsersSchema.parse(response.data)
   },
 
-  getFollowing: async (userId: string, params?: PaginationParams): Promise<PaginatedResponse<UserProfile>> => {
+  getFollowing: async (
+    userId: string,
+    params?: PaginationParams,
+  ): Promise<PaginatedResponse<UserProfile>> => {
     const response = await api.get(`/users/${userId}/following`, { params })
     return paginatedUsersSchema.parse(response.data)
   },
@@ -42,5 +51,5 @@ export const usersApi = {
   unfollow: async (userId: string): Promise<FollowResponse> => {
     const response = await api.delete(`/users/${userId}/follow`)
     return followResponseSchema.parse(response.data)
-  }
+  },
 }

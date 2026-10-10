@@ -12,7 +12,6 @@ export interface ApiError {
 // Parametros para criar um ApiError
 export type CreateApiErrorParams = Omit<ApiError, '_tag'>
 
-
 // ======= Factory Function =======
 
 // Cria um objeto ApiError imutavel
@@ -26,19 +25,12 @@ export function createApiError(params: CreateApiErrorParams): ApiError {
   })
 }
 
-
 // ======= Type Guards =======
 
 // Type guard para ApiError (mesmo com code splitting e HMR)
 export function isApiError(error: unknown): error is ApiError {
-  return (
-    typeof error === 'object' &&
-    error !== null &&
-    '_tag' in error &&
-    error._tag === 'ApiError'
-  )
+  return typeof error === 'object' && error !== null && '_tag' in error && error._tag === 'ApiError'
 }
-
 
 // ======= Helper Functions (funcoes puras) =======
 
@@ -53,7 +45,6 @@ export const isValidationError = (error: ApiError): boolean => error.status === 
 export const isServerError = (error: ApiError): boolean => error.status >= 500
 
 export const isClientError = (error: ApiError): boolean => error.status >= 400 && error.status < 500
-
 
 // ======= Utility Functions =======
 

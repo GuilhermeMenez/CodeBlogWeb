@@ -17,7 +17,10 @@ export const postsApi = {
     return postSchema.parse(response.data)
   },
 
-  getByAuthor: async (authorId: string, params?: PaginationParams): Promise<PaginatedResponse<Post>> => {
+  getByAuthor: async (
+    authorId: string,
+    params?: PaginationParams,
+  ): Promise<PaginatedResponse<Post>> => {
     const response = await api.get(`/posts/author/${authorId}`, { params })
     return paginatedPostsSchema.parse(response.data)
   },
@@ -46,5 +49,5 @@ export const postsApi = {
 
   delete: async (id: string): Promise<void> => {
     await api.delete(`/posts/${id}`)
-  }
+  },
 }

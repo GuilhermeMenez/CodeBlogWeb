@@ -31,9 +31,11 @@ export function SignIn({ setFormType }: SignInProps) {
     const result = loginSchema.safeParse(formValues)
     if (!result.success) {
       const fieldErrors = result.error.flatten().fieldErrors
-      setErrors(Object.fromEntries(
-        Object.entries(fieldErrors).map(([key, msgs]) => [key, msgs?.[0] ?? ''])
-      ))
+      setErrors(
+        Object.fromEntries(
+          Object.entries(fieldErrors).map(([key, msgs]) => [key, msgs?.[0] ?? '']),
+        ),
+      )
       return
     }
 
@@ -58,12 +60,12 @@ export function SignIn({ setFormType }: SignInProps) {
       </div>
 
       <div className="flex flex-col gap-6 items-center">
-        {errors.auth && 
+        {errors.auth && (
           <div className="flex items-center gap-2 px-4 py-2 rounded-sm text-center text-sm text-danger-40 bg-danger-40/5">
             <AlertIcon size="16px" />
-            <p className="text-center text-md text-danger-40">{errors.auth}</p> 
+            <p className="text-center text-md text-danger-40">{errors.auth}</p>
           </div>
-        }
+        )}
 
         <Form
           className="flex flex-col gap-6 w-full max-w-93"
@@ -79,21 +81,10 @@ export function SignIn({ setFormType }: SignInProps) {
             autoComplete="email"
           />
 
-          <Input
-            type="password"
-            name="password"
-            label="Senha"
-            placeholder="Insira sua senha"
-          />
+          <Input type="password" name="password" label="Senha" placeholder="Insira sua senha" />
 
           <div className="my-4">
-            <Button
-              type="submit"
-              variant="primary"
-              size="lg"
-              fullWidth
-              loading={isPending}
-            >
+            <Button type="submit" variant="primary" size="lg" fullWidth loading={isPending}>
               Entrar
             </Button>
           </div>

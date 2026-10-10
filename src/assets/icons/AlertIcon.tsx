@@ -5,8 +5,8 @@ export function AlertIcon({ size, className, ...props }: SvgProps) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 13 13" 
-      fill="none" 
+      viewBox="0 0 13 13"
+      fill="none"
       className={className}
       xmlns="http://www.w3.org/2000/svg"
       {...props}
