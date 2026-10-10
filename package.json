@@ -12,6 +12,8 @@
     "build": "npm run security:lockfile && tsc -b && vite build",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
+    "typecheck": "tsc -b",
+    "check": "npm run lint && npm run typecheck",
     "format": "prettier --write .",
     "preview": "vite preview",
     "security:lockfile": "node check-lockfile.mjs",
