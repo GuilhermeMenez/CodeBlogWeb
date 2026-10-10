@@ -11,6 +11,7 @@ Aplicação web para blog de código desenvolvida com React 19 e tecnologias mod
 - [Instalação](#-instalação)
 - [Scripts Disponíveis](#-scripts-disponíveis)
 - [Segurança de Dependências](#-segurança-de-dependências)
+- [Desenvolvimento com IA](#-desenvolvimento-com-ia)
 - [Estrutura de Diretórios](#-estrutura-de-diretórios)
 - [Padrões de Nomenclatura](#-padrões-de-nomenclatura)
 - [Estrutura de Componentes](#-estrutura-de-componentes)
@@ -95,6 +96,8 @@ A aplicação estará disponível em `http://localhost:5173`
 | `preview`  | `npm run preview`  | Visualiza o build de produção localmente             |
 | `lint`     | `npm run lint`     | Executa o ESLint para verificar problemas no código  |
 | `lint:fix` | `npm run lint:fix` | Executa o ESLint e corrige problemas automaticamente |
+| `typecheck` | `npm run typecheck` | Verifica os tipos com o TypeScript, sem gerar build |
+| `check`    | `npm run check`    | `lint` + `typecheck`; rodar antes de todo commit     |
 | `format`   | `npm run format`   | Formata o código com Prettier                        |
 | `security:lockfile` | `npm run security:lockfile` | Valida política do lockfile, `package.json` e `.npmrc` |
 | `security:audit` | `npm run security:audit` | `npm audit` (high) + verificação de assinaturas do registry |
@@ -106,6 +109,32 @@ A aplicação estará disponível em `http://localhost:5173`
 
 - Política, comandos e runbook de incidente: [`docs/security.md`](docs/security.md)
 - Checagem estrutural do lockfile: `check-lockfile.mjs`
+
+---
+
+## Desenvolvimento com IA
+
+O repositório vem configurado para o [Claude Code](https://claude.com/claude-code). A configuração é versionada em `.claude/` e vale para quem clonar o projeto.
+
+| Onde | O que é |
+|---|---|
+| `CLAUDE.md` | Contexto do projeto carregado em toda sessão: comandos, arquitetura e fluxo de trabalho |
+| `.claude/settings.json` | Permissões (o que roda sem perguntar, o que pede confirmação, o que é negado) e hooks |
+| `.claude/hooks/` | `format.mjs` formata com Prettier cada arquivo editado; `guard-npm.mjs` bloqueia comandos `npm` que violem a política de dependências |
+| `.claude/rules/` | Convenções por área (dados, UI, rotas), carregadas só quando arquivos daquela área são tocados |
+| `.claude/skills/` | Receitas invocáveis: `/new-endpoint`, `/new-ui-component`, `/add-dependency`, `/spec` |
+| `docs/product.md` | Visão de produto e mapa de funcionalidades |
+| `specs/` | Especificações de features grandes — ver [`specs/README.md`](specs/README.md) |
+
+### Fluxo por tamanho de mudança
+
+| Tamanho | Exemplo | Fluxo |
+|---|---|---|
+| Pequeno | Ajuste de estilo, bug pontual | Pedido direto → `npm run check` → commit |
+| Médio | Tela nova consumindo endpoint novo | Plan mode → implementar → `npm run check` + app com mocks → `/code-review` → PR |
+| Grande | Domínio novo, várias telas e endpoints | `/spec` → uma sessão por fatia → `/code-review` + `/security-review` → PR |
+
+Preferências pessoais ficam em `.claude/settings.local.json`, que não é versionado.
 
 ---
 

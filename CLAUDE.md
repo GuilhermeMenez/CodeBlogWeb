@@ -6,15 +6,32 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - `npm start` — Vite dev server (http://localhost:5173)
 - `npm run build` — `tsc -b && vite build` (type-check is part of the build; the script runs the lockfile policy check first)
-- `npm run lint` / `npm run lint:fix` — ESLint over `src/**/*.{ts,tsx}`
-- `npm run format` — Prettier
-- No test runner is configured.
+- `npm run check` — `lint` + `typecheck`. **Run this before calling any change done.**
+- `npm run lint` / `npm run lint:fix` — ESLint (flat config, `eslint.config.js`) over `src/**/*.{ts,tsx}`
+- `npm run typecheck` — `tsc -b`
+- `npm run format` — Prettier (a hook already formats each file you edit)
+- No test runner is configured. UI changes are verified by running the app with `VITE_ENABLE_MOCKS=true`.
+
+## Workflow
+
+Pick the lightest process that fits the change:
+
+- **Small** (style tweak, isolated bug, component following an existing pattern): just do it → `npm run check`.
+- **Medium** (a new screen consuming a new endpoint): plan mode first → implement → `npm run check` + run the app with mocks → `/code-review`.
+- **Large** (new domain, several screens/endpoints): `/spec` writes `specs/NNN-slug.md` → implement one slice per session → `/code-review` + `/security-review`. See `specs/README.md`.
+
+Project skills (`.claude/skills/`): `/new-endpoint` (schema → api → query key → hook → MSW mock), `/new-ui-component`, `/add-dependency` (manual only), `/spec`.
+
+Path-scoped conventions live in `.claude/rules/` (`data-layer`, `ui-components`, `routing`) and load when you touch matching files. Product context: `docs/product.md`.
+
+When a decision becomes a lasting convention, record it in the matching rule file (or here if it is cross-cutting) in the same change.
 
 ### Dependency policy (supply-chain hardened)
 - `.npmrc` sets `ignore-scripts=true`, `save-exact=true`: use `npm ci` to install and `npm install pkg@x.y.z` to add. Never override `ignore-scripts`.
 - `npm run security:check` = `check-lockfile.mjs` (root) (registry-only `resolved`, `integrity`, install-script allowlist, no git deps, exact versions incl. `overrides`, `.npmrc` intact) + `npm audit --audit-level=high` + `npm audit signatures`. The lockfile part (`security:lockfile`) is chained into `build` (not a `prebuild` hook: `ignore-scripts=true` skips pre/post scripts).
 - Policy and incident runbook: `docs/security.md`.
 - Dependencies are pinned to exact versions; keep it that way. Don't add `preinstall`/`postinstall`/`prepare` scripts (the check fails on them).
+- Changes to `package.json`, `package-lock.json`, `.npmrc` and `check-lockfile.mjs` need review by the other dev: keep them in their own commit and call them out. A `PreToolUse` hook (`.claude/hooks/guard-npm.mjs`) blocks installs without an exact version and any attempt to disable `ignore-scripts`.
 
 ## Environment
 

@@ -12,6 +12,7 @@ Política de dependências, runbook de incidente e pendências de infraestrutura
 | Gate no build | `package.json` (`build`) | `npm run build` encadeia o `check-lockfile` antes de compilar (offline); vale para qualquer deploy que rode o build. Não usar hook `prebuild`: com `ignore-scripts=true` o npm ignora scripts `pre`/`post` |
 | Auditoria | `npm audit --audit-level=high` | Advisories do GHSA, incluindo malware |
 | Assinaturas | `npm audit signatures` | Valida assinatura e provenance do registry |
+| Guarda no Claude Code | `.claude/hooks/guard-npm.mjs` + `.claude/settings.json` | Em sessões de IA: bloqueia `npm install` sem versão exata (ou via git/URL) e qualquer tentativa de desativar `ignore-scripts`; pede confirmação para editar `package.json`, lockfile, `.npmrc` e `check-lockfile.mjs`. Não substitui a revisão humana |
 | Segredos fora do git | `.gitignore` (`.env`, `.env.*`) + `.env.example` | `.env` não é versionado |
 
 ## Comandos
