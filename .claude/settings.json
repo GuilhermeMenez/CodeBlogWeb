@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(npm run check)",
+      "Bash(npm run lint)",
+      "Bash(npm run lint:fix)",
+      "Bash(npm run typecheck)",
+      "Bash(npm run format)",
+      "Bash(npm run build)",
+      "Bash(npm run security:check)",
+      "Bash(npm run security:lockfile)",
+      "Bash(npm run security:audit)",
+      "Bash(npm ci)",
+      "Bash(npm view *)",
+      "Bash(git status)",
+      "Bash(git status *)",
+      "Bash(git diff)",
+      "Bash(git diff *)",
+      "Bash(git log)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(git branch)"
+    ],
+    "ask": [
+      "Bash(npm install)",
+      "Bash(npm install *)",
+      "Bash(npm i *)",
+      "Bash(npm add *)",
+      "Bash(npm update)",
+      "Bash(npm update *)",
+      "Bash(npm uninstall *)",
+      "Bash(git push)",
+      "Bash(git push *)",
+      "Edit(/package.json)",
+      "Edit(/package-lock.json)",
+      "Edit(/.npmrc)",
+      "Edit(/check-lockfile.mjs)"
+    ],
+    "deny": [
+      "Read(/.env)",
+      "Read(/.env.local)",
+      "Edit(/src/route-tree.gen.ts)",
+      "Edit(/public/mockServiceWorker.js)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard-npm.mjs\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/format.mjs\""
+          }
+        ]
+      }
+    ]
+  }
+}
