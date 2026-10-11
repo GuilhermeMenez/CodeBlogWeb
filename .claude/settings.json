@@ -30,6 +30,8 @@
       "Bash(npm update)",
       "Bash(npm update *)",
       "Bash(npm uninstall *)",
+      "Bash(git commit)",
+      "Bash(git commit *)",
       "Bash(git push)",
       "Bash(git push *)",
       "Edit(/package.json)",
