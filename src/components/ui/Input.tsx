@@ -36,8 +36,7 @@ const inputControlVariants = tv({
 })
 
 export interface InputProps
-  extends
-    Omit<ComponentProps<typeof Field.Control>, 'className'>,
+  extends Omit<ComponentProps<typeof Field.Control>, 'className'>,
     VariantProps<typeof inputVariants> {
   label?: string
   className?: string
@@ -74,7 +73,7 @@ export function Input({
         {isSearch && <span className={inputIconVariants()}>{<SearchIcon />}</span>}
       </div>
 
-      <Field.Error data-slot="input-error" className="mt-2.5 text-sm text-danger-40" />
+      <Field.Error data-slot="input-error" className="mt-2.5 text-sm text-danger-30" />
     </Field.Root>
   )
 }

@@ -1,11 +1,11 @@
-import type { SvgProps } from '@/types/svg.types'
 import { twMerge } from 'tailwind-merge'
 
-interface LoaderProps extends SvgProps {
-  size?: LoaderSizeKey
-}
-
 type LoaderSizeKey = keyof typeof LoaderSizes
+
+interface LoaderProps {
+  size?: LoaderSizeKey
+  className?: string
+}
 
 const LoaderSizes = {
   xl: 32,

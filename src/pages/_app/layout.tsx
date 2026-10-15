@@ -11,7 +11,7 @@ export const Route = createFileRoute('/_app')({
 
 function AppLayout() {
   const [isMenuOpen, setIsMenuOpen] = useState(true)
-  
+
   return (
     <div className="flex w-full min-h-dvh">
       <Navigation isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />

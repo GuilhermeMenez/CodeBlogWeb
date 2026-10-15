@@ -1,7 +1,7 @@
 import { http, HttpResponse, delay } from 'msw'
 import { mockUsers, findUserById, currentUser } from '../data'
 import { paginate, extractPaginationParams } from '../utils/pagination'
-import type { UpdateProfileDTO } from '@/types/users.types'
+import type { UpdateProfileDTO } from '@/api/schemas/users'
 
 // Simulated follow relationships
 const followingMap = new Map<string, Set<string>>([
@@ -23,7 +23,7 @@ export const usersHandlers = [
       (u) =>
         u.name.toLowerCase().includes(query) ||
         u.email.toLowerCase().includes(query) ||
-        u.bio?.toLowerCase().includes(query)
+        u.bio?.toLowerCase().includes(query),
     )
 
     return HttpResponse.json(paginate(filtered, params))
@@ -37,10 +37,7 @@ export const usersHandlers = [
     const user = findUserById(userId)
 
     if (!user) {
-      return HttpResponse.json(
-        { message: 'User not found' },
-        { status: 404 }
-      )
+      return HttpResponse.json({ message: 'User not found' }, { status: 404 })
     }
 
     return HttpResponse.json(user)
@@ -53,20 +50,14 @@ export const usersHandlers = [
     const authHeader = request.headers.get('Authorization')
 
     if (!authHeader?.startsWith('Bearer ')) {
-      return HttpResponse.json(
-        { message: 'Unauthorized' },
-        { status: 401 }
-      )
+      return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
     const body = (await request.json()) as UpdateProfileDTO
     const user = findUserById(currentUser.id)
 
     if (!user) {
-      return HttpResponse.json(
-        { message: 'User not found' },
-        { status: 404 }
-      )
+      return HttpResponse.json({ message: 'User not found' }, { status: 404 })
     }
 
     const updatedProfile = {
@@ -88,10 +79,7 @@ export const usersHandlers = [
     const user = findUserById(userId)
 
     if (!user) {
-      return HttpResponse.json(
-        { message: 'User not found' },
-        { status: 404 }
-      )
+      return HttpResponse.json({ message: 'User not found' }, { status: 404 })
     }
 
     // Find users who follow this user
@@ -114,10 +102,7 @@ export const usersHandlers = [
     const user = findUserById(userId)
 
     if (!user) {
-      return HttpResponse.json(
-        { message: 'User not found' },
-        { status: 404 }
-      )
+      return HttpResponse.json({ message: 'User not found' }, { status: 404 })
     }
 
     const followingIds = followingMap.get(userId) ?? new Set()
@@ -133,27 +118,18 @@ export const usersHandlers = [
     const authHeader = request.headers.get('Authorization')
 
     if (!authHeader?.startsWith('Bearer ')) {
-      return HttpResponse.json(
-        { message: 'Unauthorized' },
-        { status: 401 }
-      )
+      return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
     const { userId } = params as { userId: string }
     const targetUser = findUserById(userId)
 
     if (!targetUser) {
-      return HttpResponse.json(
-        { message: 'User not found' },
-        { status: 404 }
-      )
+      return HttpResponse.json({ message: 'User not found' }, { status: 404 })
     }
 
     if (userId === currentUser.id) {
-      return HttpResponse.json(
-        { message: 'Cannot follow yourself' },
-        { status: 400 }
-      )
+      return HttpResponse.json({ message: 'Cannot follow yourself' }, { status: 400 })
     }
 
     // Simulate adding to following
@@ -174,20 +150,14 @@ export const usersHandlers = [
     const authHeader = request.headers.get('Authorization')
 
     if (!authHeader?.startsWith('Bearer ')) {
-      return HttpResponse.json(
-        { message: 'Unauthorized' },
-        { status: 401 }
-      )
+      return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
     const { userId } = params as { userId: string }
     const targetUser = findUserById(userId)
 
     if (!targetUser) {
-      return HttpResponse.json(
-        { message: 'User not found' },
-        { status: 404 }
-      )
+      return HttpResponse.json({ message: 'User not found' }, { status: 404 })
     }
 
     // Simulate removing from following

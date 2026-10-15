@@ -36,8 +36,12 @@ export function AccountDropdown() {
             <Avatar src={srcMock} letter="CB" size="large" />
 
             <div className="flex flex-col gap-0.5">
-              <p className="font-normal text-md text-white-30 group-hover:text-white-40">Code Bob</p>
-              <p className="font-normal text-xs text-white-20 group-hover:text-white-30">bobgood@mail.com</p>
+              <p className="font-normal text-md text-white-30 group-hover:text-white-40">
+                Code Bob
+              </p>
+              <p className="font-normal text-xs text-white-20 group-hover:text-white-30">
+                bobgood@mail.com
+              </p>
             </div>
           </Link>
         </DropdownItem>

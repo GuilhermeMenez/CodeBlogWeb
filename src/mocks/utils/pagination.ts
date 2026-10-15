@@ -1,9 +1,6 @@
-import type { PaginatedResponse, PaginationParams } from '@/types/common.types'
+import type { PaginatedResponse, PaginationParams } from '@/api/schemas/common'
 
-export function paginate<T>(
-  items: T[],
-  params?: PaginationParams
-): PaginatedResponse<T> {
+export function paginate<T>(items: T[], params?: PaginationParams): PaginatedResponse<T> {
   const page = params?.page ?? 1
   const limit = params?.limit ?? 10
   const start = (page - 1) * limit

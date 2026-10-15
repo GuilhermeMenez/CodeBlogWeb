@@ -1,10 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { usersApi } from '@/http/endpoints/users'
+import { usersApi } from '@/api/users'
 import { queryKeys } from '@/lib/query-client'
 
-import type { PaginationParams } from '@/types/common.types'
-import type { UpdateProfileDTO } from '@/types/users.types'
+import type { PaginationParams } from '@/api/schemas/common'
+import type { UpdateProfileDTO } from '@/api/schemas/users'
 
 // ======= Queries =======
 
@@ -55,10 +55,7 @@ export function useUpdateProfile() {
     retry: false,
     onSuccess: (updatedProfile) => {
       // Atualiza cache do perfil
-      queryClient.setQueryData(
-        queryKeys.users.detail(updatedProfile.id),
-        updatedProfile
-      )
+      queryClient.setQueryData(queryKeys.users.detail(updatedProfile.id), updatedProfile)
 
       // Invalida dados do usuário autenticado
       queryClient.invalidateQueries({ queryKey: queryKeys.auth.me() })

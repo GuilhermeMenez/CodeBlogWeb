@@ -1,4 +1,4 @@
-import type { SvgProps } from '@/types/svg.types'
+import type { SvgProps } from '@/assets/types'
 
 export function FavIcon({ size, className, ...props }: SvgProps) {
   return (

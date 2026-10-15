@@ -1,4 +1,4 @@
-import type { SvgProps } from '@/types/svg.types'
+import type { SvgProps } from '@/assets/types'
 
 export function LogoutIcon({ size, className, ...props }: SvgProps) {
   return (

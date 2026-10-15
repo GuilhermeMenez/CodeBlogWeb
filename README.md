@@ -11,6 +11,7 @@ Aplicação web para blog de código desenvolvida com React 19 e tecnologias mod
 - [Instalação](#-instalação)
 - [Scripts Disponíveis](#-scripts-disponíveis)
 - [Segurança de Dependências](#-segurança-de-dependências)
+- [Desenvolvimento com IA](#-desenvolvimento-com-ia)
 - [Estrutura de Diretórios](#-estrutura-de-diretórios)
 - [Padrões de Nomenclatura](#-padrões-de-nomenclatura)
 - [Estrutura de Componentes](#-estrutura-de-componentes)
@@ -28,12 +29,12 @@ Aplicação web para blog de código desenvolvida com React 19 e tecnologias mod
 | **Variantes**     | [Tailwind Variants](https://www.tailwind-variants.org/)     | 3              |
 | **Merge Classes** | [Tailwind Merge](https://github.com/dcastil/tailwind-merge) | 3              |
 | **UI Headless**   | [Base UI React](https://base-ui.com/)                       | 1              |
+| **Validação**     | [Zod](https://zod.dev/)                                     | 4              |
 | **HTTP Client**   | [Axios](https://axios-http.com/)                            | 1              |
 | **Server State**  | [TanStack Query](https://tanstack.com/query)                | 5              |
 | **Roteamento**    | [TanStack Router](https://tanstack.com/router)              | 1 (file-based) |
 | **API Mocking**   | [Mock Service Worker](https://mswjs.io/)                    | 2              |
-| **Linter**        | [ESLint](https://eslint.org/)                               | 9              |
-| **Formatter**     | [Prettier](https://prettier.io/)                            | 3              |
+| **Lint/Format**   | [Biome](https://biomejs.dev/)                               | 2              |
 
 ---
 
@@ -49,7 +50,7 @@ Antes de começar, certifique-se de ter instalado:
 ## Instalação
 
 > **Importante**: Este projeto segue uma política de segurança para a cadeia de suprimentos.
-> Siga a documentação em `SECURITY.md` e `install-deps-security.md` para garantir a instalação segura das dependências e execute verificações de segurança antes de compilar ou publicar.
+> Siga [`docs/security.md`](docs/security.md) para instalar dependências com segurança e execute `npm run security:check` antes de compilar ou publicar.
 
 ### 1. Clone o repositório
 
@@ -61,22 +62,18 @@ cd code-blog-web
 ### 2. Instale as dependências
 
 ```bash
-npm run deps:ci
+npm ci
 ```
 
-### 2.1 Rebuild controlado de pacotes confiáveis (quando necessário)
-
-```bash
-npm run deps:rebuild:trusted
-```
+O `.npmrc` mantém `ignore-scripts=true`, então nenhum script de ciclo de vida de dependência é executado.
+Para adicionar um pacote: `npm install <pacote>@<x.y.z>` (versão exata; `save-exact` já é padrão).
 
 ### 3. Configure as variáveis de ambiente
 
-Crie um arquivo `.env` na raiz do projeto:
+Copie o modelo e ajuste os valores (o `.env` não é versionado):
 
-```env
-VITE_API_URL='http://localhost:8080/'
-VITE_ENABLE_MOCKS=false
+```bash
+cp .env.example .env
 ```
 
 ### 4. Inicie o servidor de desenvolvimento
@@ -94,27 +91,49 @@ A aplicação estará disponível em `http://localhost:5173`
 | Script     | Comando            | Descrição                                            |
 |------------|--------------------|------------------------------------------------------|
 | `start`    | `npm start`        | Inicia o servidor de desenvolvimento                 |
-| `build`    | `npm run build`    | Compila TypeScript e gera build de produção          |
+| `build`    | `npm run build`    | Valida o lockfile, compila TypeScript e gera build de produção |
 | `preview`  | `npm run preview`  | Visualiza o build de produção localmente             |
-| `lint`     | `npm run lint`     | Executa o ESLint para verificar problemas no código  |
-| `lint:fix` | `npm run lint:fix` | Executa o ESLint e corrige problemas automaticamente |
-| `format`   | `npm run format`   | Formata o código com Prettier                        |
-| `deps:ci`  | `npm run deps:ci`  | Instala dependências de forma determinística e segura |
-| `deps:add` | `npm run deps:add -- pacote@x.y.z` | Adiciona pacote com versão exata e sem scripts |
-| `deps:update-lock` | `npm run deps:update-lock` | Atualiza apenas o lockfile com scripts desabilitados |
-| `deps:audit:full` | `npm run deps:audit:full` | Executa auditoria completa de vulnerabilidades |
-| `security:scan` | `npm run security:scan` | Varredura de IOC e versões comprometidas do TanStack |
-| `security:check` | `npm run security:check` | Varredura + auditoria completa |
+| `lint`     | `npm run lint`     | Executa o linter do Biome                            |
+| `lint:fix` | `npm run lint:fix` | Aplica fixes seguros e formatação (Biome) |
+| `typecheck` | `npm run typecheck` | Verifica os tipos com o TypeScript, sem gerar build |
+| `check`    | `npm run check`    | `biome check` (lint + formatação) + `typecheck`; rodar antes de todo commit |
+| `format`   | `npm run format`   | Formata o código com Biome (TS/JS/JSON/CSS)          |
+| `security:lockfile` | `npm run security:lockfile` | Valida política do lockfile, `package.json` e `.npmrc` |
+| `security:audit` | `npm run security:audit` | `npm audit` (high) + verificação de assinaturas do registry |
+| `security:check` | `npm run security:check` | Lockfile + auditoria |
 
 ---
 
 ## Segurança de Dependências
 
-- Política resumida: `.github/SECURITY.md` (fallback: `SECURITY.md`)
-- Playbook completo: `security/install-deps-security.md`
-- Lista monitorada de versões comprometidas do TanStack: `security/tanstack-compromised-versions.txt`
-- Bloqueio de fluxo inseguro de instalação: `security/enforce-safe-install.cjs`
-- Scanner automatizado de supply chain: `security/scan-supply-chain.cjs`
+- Política, comandos e runbook de incidente: [`docs/security.md`](docs/security.md)
+- Checagem estrutural do lockfile: `check-lockfile.mjs`
+
+---
+
+## Desenvolvimento com IA
+
+O repositório vem configurado para o [Claude Code](https://claude.com/claude-code). A configuração é versionada em `.claude/` e vale para quem clonar o projeto.
+
+| Onde | O que é |
+|---|---|
+| `CLAUDE.md` | Contexto do projeto carregado em toda sessão: comandos, arquitetura e fluxo de trabalho |
+| `.claude/settings.json` | Permissões (o que roda sem perguntar, o que pede confirmação, o que é negado) e hooks |
+| `.claude/hooks/` | `format.mjs` formata com Biome cada arquivo editado; `guard-npm.mjs` bloqueia comandos `npm` que violem a política de dependências |
+| `.claude/rules/` | Convenções por área (dados, UI, rotas), carregadas só quando arquivos daquela área são tocados |
+| `.claude/skills/` | Receitas invocáveis: `/new-endpoint`, `/new-ui-component`, `/add-dependency`, `/spec` |
+| `docs/product.md` | Visão de produto e mapa de funcionalidades |
+| `specs/` | Especificações de features grandes — ver [`specs/README.md`](specs/README.md) |
+
+### Fluxo por tamanho de mudança
+
+| Tamanho | Exemplo | Fluxo |
+|---|---|---|
+| Pequeno | Ajuste de estilo, bug pontual | Pedido direto → `npm run check` → commit |
+| Médio | Tela nova consumindo endpoint novo | Plan mode → implementar → `npm run check` + app com mocks → `/code-review` → PR |
+| Grande | Domínio novo, várias telas e endpoints | `/spec` → uma sessão por fatia → `/code-review` + `/security-review` → PR |
+
+Preferências pessoais ficam em `.claude/settings.local.json`, que não é versionado.
 
 ---
 
@@ -122,21 +141,26 @@ A aplicação estará disponível em `http://localhost:5173`
 
 ```
 src/
+├── api/
+│   ├── schemas/                  # Schemas e tipos inferidos (auth, posts, users, common)
+│   ├── client.ts                 # Configuração do cliente HTTP (Axios)
+│   ├── auth.ts                   # Funções de chamadas API — autenticação
+│   ├── posts.ts                  # Funções de chamadas API — posts
+│   └── users.ts                  # Funções de chamadas API — usuários
+│
 ├── assets/                       # Assets estáticos
 │   └── icons/                    # Componentes de ícones SVG
+│   ├── images/                   # Imagens e banners
+│   └── svgs/                     # SVG estáticos e personalizáveis
 │
 ├── components/
-│   ├── ui/                       # Componentes primitivos (Button, Input, etc.)
-│   ├── layout/                   # Componentes de layout (Header, Footer, etc.)
-│   └── common/                   # Componentes compartilhados
+│   └── ui/                       # Componentes primitivos (Button, Input, etc.)
 │
 ├── hooks/                        # Custom hooks (useAuth, usePosts, useUsers)
 │
-├── http/
-│   ├── endpoints/                # Funções de chamadas API (auth, posts, users)
-│   └── axios.ts                  # Configuração do cliente HTTP
-│
 ├── lib/                          # Configurações de bibliotecas externas
+│
+├── mocks/                        # Configurações de mocks (MSW)
 │
 ├── pages/                        # Páginas (TanStack Router file-based)
 │
@@ -158,13 +182,15 @@ src/
 
 | Tipo            | Convenção                  | Exemplo                           |
 |-----------------|----------------------------|-----------------------------------|
+| **Api**         | `kebab-case.ts`            | `client.ts`, `auth.ts`            |
 | **Componentes** | `PascalCase.tsx`           | `Button.tsx`, `PostCard.tsx`      |
 | **Ícones**      | `PascalCaseIcon.tsx`       | `PlusIcon.tsx`, `SearchIcon.tsx`  |
 | **Hooks**       | `useCamelCase.ts`          | `usePosts.ts`, `useAuth.ts`       |
-| **Http/Lib**    | `kebab-case.ts`            | `posts.ts`, `query-client.ts`     |
+| **Lib**         | `kebab-case.ts`            | `query-client.ts`                 |
+| **Mocks**       | `kebab-case.ts`            | `index.tsx`. `auth.ts`            |
 | **Pages**       | TanStack Router file-based | `index.tsx`, `$postId/index.tsx`  |
 | **Estilos**     | `kebab-case.css`           | `index.css`                       |
-| **Types**       | `kebab-case.types.ts`      | `posts.types.ts`, `auth.types.ts` |
+| **Types**       | `kebab-case.types.ts`      | `auth.types.ts`                   |
 | **Enums**       | `kebab-case.enums.ts`      | `posts.enums.ts`                  |
 | **Constantes**  | `kebab-case.constants.ts`  | `api.constants.ts`                |
 | **Utilitários** | `kebab-case.ts`            | `format-date.ts`                  |

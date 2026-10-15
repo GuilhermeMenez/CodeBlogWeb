@@ -1,43 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lusitana:wght@400;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   /* fonts */
-  --font-inter: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-lusitana: "Lusitana", Georgia, "Times New Roman", serif;
-  --font-source: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-inter: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-lusitana: 'Lusitana', Georgia, 'Times New Roman', serif;
+  --font-source: 'Source Serif 4', Georgia, 'Times New Roman', serif;
 
   /* colors */
-  --color-white-50: #FAFAFA;
-  --color-white-40: #EDEEF0;
-  --color-white-30: #C3C6CB;
-  --color-white-20: #999EA6;
+  --color-white-50: #fafafa;
+  --color-white-40: #edeef0;
+  --color-white-30: #c3c6cb;
+  --color-white-20: #999ea6;
 
-  --color-slate-50: #80868E;
-  --color-slate-40: #545B62;
-  --color-slate-30: #363A3F;
-  --color-slate-20: #2E3135;
+  --color-slate-50: #80868e;
+  --color-slate-40: #545b62;
+  --color-slate-30: #363a3f;
+  --color-slate-20: #2e3135;
 
   --color-black-50: #111113;
   --color-black-40: #161619;
-  --color-black-30: #19191C;
-  --color-black-20: #1E1E22;
+  --color-black-30: #19191c;
+  --color-black-20: #1e1e22;
 
-  --color-accent-50: #684BDF;
-  --color-accent-40: #7459E2;
-  --color-accent-30: #856DE5;
+  --color-accent-50: #684bdf;
+  --color-accent-40: #7459e2;
+  --color-accent-30: #856de5;
 
-  --color-success-50: #1A8917;
-  --color-success-40: #34AB45;
-  --color-success-30: #52BD62;
+  --color-success-50: #1a8917;
+  --color-success-40: #34ab45;
+  --color-success-30: #52bd62;
 
-  --color-danger-50: #C84141;
-  --color-danger-40: #CC5454;
-  --color-danger-30: #D16060;
-
-  /* spacings */
-  --spacing-4.5: 1.125rem;
-  --spacing-9.5: 2.375rem;
+  --color-danger-50: #c84141;
+  --color-danger-40: #cc5454;
+  --color-danger-30: #d16060;
 
   /* font-size */
   --text-xs: 0.75rem;
@@ -45,7 +41,7 @@
   --text-md: 0.875rem;
   --text-9xl: 7.375rem;
   --text-10xl: 8rem;
-  
+
   /* animations */
   --animate-spin: spin 2s linear infinite;
 }
@@ -103,14 +99,14 @@
   }
 
   .header-item {
-    @apply flex justify-center items-center text-white-20 hover:text-white-40 cursor-pointer
+    @apply flex justify-center items-center text-white-20 hover:text-white-40 cursor-pointer;
   }
 
   .icon-box {
-    @apply flex justify-center items-center w-6 h-6
+    @apply flex justify-center items-center w-6 h-6;
   }
 
   .dot {
-    @apply absolute top-1.25 right-0.5 w-3.5 h-3.5 border-2 border-black-50 bg-accent-50 rounded-full
+    @apply absolute top-1.25 right-0.5 w-3.5 h-3.5 border-2 border-black-50 bg-accent-50 rounded-full;
   }
 }

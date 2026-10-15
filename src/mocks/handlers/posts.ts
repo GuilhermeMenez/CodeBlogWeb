@@ -1,7 +1,7 @@
 import { http, HttpResponse, delay } from 'msw'
 import { mockPosts, findPostById, filterPostsByAuthor, searchPosts, currentUser } from '../data'
 import { paginate, extractPaginationParams } from '../utils/pagination'
-import type { CreatePostDTO, UpdatePostDTO } from '@/types/posts.types'
+import type { CreatePostDTO, UpdatePostDTO } from '@/api/schemas/posts'
 
 export const postsHandlers = [
   // GET /posts
@@ -61,10 +61,7 @@ export const postsHandlers = [
     const post = findPostById(id)
 
     if (!post) {
-      return HttpResponse.json(
-        { message: 'Post not found' },
-        { status: 404 }
-      )
+      return HttpResponse.json({ message: 'Post not found' }, { status: 404 })
     }
 
     return HttpResponse.json(post)
@@ -77,10 +74,7 @@ export const postsHandlers = [
     const authHeader = request.headers.get('Authorization')
 
     if (!authHeader?.startsWith('Bearer ')) {
-      return HttpResponse.json(
-        { message: 'Unauthorized' },
-        { status: 401 }
-      )
+      return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
     const body = (await request.json()) as CreatePostDTO
@@ -107,28 +101,19 @@ export const postsHandlers = [
     const authHeader = request.headers.get('Authorization')
 
     if (!authHeader?.startsWith('Bearer ')) {
-      return HttpResponse.json(
-        { message: 'Unauthorized' },
-        { status: 401 }
-      )
+      return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
     const { id } = params as { id: string }
     const post = findPostById(id)
 
     if (!post) {
-      return HttpResponse.json(
-        { message: 'Post not found' },
-        { status: 404 }
-      )
+      return HttpResponse.json({ message: 'Post not found' }, { status: 404 })
     }
 
     // Check ownership
     if (post.authorId !== currentUser.id) {
-      return HttpResponse.json(
-        { message: 'Forbidden' },
-        { status: 403 }
-      )
+      return HttpResponse.json({ message: 'Forbidden' }, { status: 403 })
     }
 
     const body = (await request.json()) as UpdatePostDTO
@@ -149,28 +134,19 @@ export const postsHandlers = [
     const authHeader = request.headers.get('Authorization')
 
     if (!authHeader?.startsWith('Bearer ')) {
-      return HttpResponse.json(
-        { message: 'Unauthorized' },
-        { status: 401 }
-      )
+      return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 })
     }
 
     const { id } = params as { id: string }
     const post = findPostById(id)
 
     if (!post) {
-      return HttpResponse.json(
-        { message: 'Post not found' },
-        { status: 404 }
-      )
+      return HttpResponse.json({ message: 'Post not found' }, { status: 404 })
     }
 
     // Check ownership
     if (post.authorId !== currentUser.id) {
-      return HttpResponse.json(
-        { message: 'Forbidden' },
-        { status: 403 }
-      )
+      return HttpResponse.json({ message: 'Forbidden' }, { status: 403 })
     }
 
     return new HttpResponse(null, { status: 204 })

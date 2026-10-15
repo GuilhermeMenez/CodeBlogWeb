@@ -8,10 +8,7 @@ export function Header() {
   return (
     <div className="sticky inset-x-0 top-0 flex justify-end items-center w-full h-17.5 py-4 px-6 z-100">
       <div className="flex gap-4">
-        <button
-          type="button"
-          className="gap-2 p-1 rounded-xs header-item focus-ring"
-        >
+        <button type="button" className="gap-2 p-1 rounded-xs header-item focus-ring">
           <div className="icon-box">
             <EditIcon size={20} />
           </div>

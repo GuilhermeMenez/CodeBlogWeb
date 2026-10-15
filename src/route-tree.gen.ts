@@ -10,22 +10,17 @@
 
 import { Route as rootRouteImport } from './pages/__root'
 import { Route as AppLayoutRouteImport } from './pages/_app/layout'
-import { Route as DesignSystemIndexRouteImport } from './pages/design-system/index'
 import { Route as AuthIndexRouteImport } from './pages/_auth/index'
-import { Route as AppFeedIndexRouteImport } from './pages/_app/feed/index'
+import { Route as DesignSystemIndexRouteImport } from './pages/design-system/index'
 import { Route as AppWriterIndexRouteImport } from './pages/_app/$writer/index'
-import { Route as AppMeSettingsRouteImport } from './pages/_app/me/settings'
-import { Route as AppMeLibraryRouteImport } from './pages/_app/me/library'
+import { Route as AppFeedIndexRouteImport } from './pages/_app/feed/index'
 import { Route as AppMeFollowingRouteImport } from './pages/_app/me/following'
+import { Route as AppMeLibraryRouteImport } from './pages/_app/me/library'
+import { Route as AppMeSettingsRouteImport } from './pages/_app/me/settings'
 import { Route as AppWriterPostIdIndexRouteImport } from './pages/_app/$writer/$postId/index'
 
 const AppLayoutRoute = AppLayoutRouteImport.update({
   id: '/_app',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DesignSystemIndexRoute = DesignSystemIndexRouteImport.update({
-  id: '/design-system/',
-  path: '/design-system/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthIndexRoute = AuthIndexRouteImport.update({
@@ -33,19 +28,24 @@ const AuthIndexRoute = AuthIndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppFeedIndexRoute = AppFeedIndexRouteImport.update({
-  id: '/feed/',
-  path: '/feed/',
-  getParentRoute: () => AppLayoutRoute,
+const DesignSystemIndexRoute = DesignSystemIndexRouteImport.update({
+  id: '/design-system/',
+  path: '/design-system/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AppWriterIndexRoute = AppWriterIndexRouteImport.update({
   id: '/$writer/',
   path: '/$writer/',
   getParentRoute: () => AppLayoutRoute,
 } as any)
-const AppMeSettingsRoute = AppMeSettingsRouteImport.update({
-  id: '/me/settings',
-  path: '/me/settings',
+const AppFeedIndexRoute = AppFeedIndexRouteImport.update({
+  id: '/feed/',
+  path: '/feed/',
+  getParentRoute: () => AppLayoutRoute,
+} as any)
+const AppMeFollowingRoute = AppMeFollowingRouteImport.update({
+  id: '/me/following',
+  path: '/me/following',
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppMeLibraryRoute = AppMeLibraryRouteImport.update({
@@ -53,9 +53,9 @@ const AppMeLibraryRoute = AppMeLibraryRouteImport.update({
   path: '/me/library',
   getParentRoute: () => AppLayoutRoute,
 } as any)
-const AppMeFollowingRoute = AppMeFollowingRouteImport.update({
-  id: '/me/following',
-  path: '/me/following',
+const AppMeSettingsRoute = AppMeSettingsRouteImport.update({
+  id: '/me/settings',
+  path: '/me/settings',
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppWriterPostIdIndexRoute = AppWriterPostIdIndexRouteImport.update({
@@ -145,13 +145,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/design-system/': {
-      id: '/design-system/'
-      path: '/design-system'
-      fullPath: '/design-system/'
-      preLoaderRoute: typeof DesignSystemIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_auth/': {
       id: '/_auth/'
       path: '/'
@@ -159,12 +152,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app/feed/': {
-      id: '/_app/feed/'
-      path: '/feed'
-      fullPath: '/feed/'
-      preLoaderRoute: typeof AppFeedIndexRouteImport
-      parentRoute: typeof AppLayoutRoute
+    '/design-system/': {
+      id: '/design-system/'
+      path: '/design-system'
+      fullPath: '/design-system/'
+      preLoaderRoute: typeof DesignSystemIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_app/$writer/': {
       id: '/_app/$writer/'
@@ -173,11 +166,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppWriterIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/_app/me/settings': {
-      id: '/_app/me/settings'
-      path: '/me/settings'
-      fullPath: '/me/settings'
-      preLoaderRoute: typeof AppMeSettingsRouteImport
+    '/_app/feed/': {
+      id: '/_app/feed/'
+      path: '/feed'
+      fullPath: '/feed/'
+      preLoaderRoute: typeof AppFeedIndexRouteImport
+      parentRoute: typeof AppLayoutRoute
+    }
+    '/_app/me/following': {
+      id: '/_app/me/following'
+      path: '/me/following'
+      fullPath: '/me/following'
+      preLoaderRoute: typeof AppMeFollowingRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/_app/me/library': {
@@ -187,11 +187,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMeLibraryRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/_app/me/following': {
-      id: '/_app/me/following'
-      path: '/me/following'
-      fullPath: '/me/following'
-      preLoaderRoute: typeof AppMeFollowingRouteImport
+    '/_app/me/settings': {
+      id: '/_app/me/settings'
+      path: '/me/settings'
+      fullPath: '/me/settings'
+      preLoaderRoute: typeof AppMeSettingsRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/_app/$writer/$postId/': {

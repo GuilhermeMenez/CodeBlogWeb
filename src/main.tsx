@@ -22,6 +22,7 @@ async function bootstrap() {
     console.error('Failed to initialize MSW', error)
   }
 
+  // biome-ignore lint/style/noNonNullAssertion: #root é garantido pelo index.html
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <App />

@@ -1,4 +1,4 @@
-import type { Post } from '@/types/posts.types'
+import type { Post } from '@/api/schemas/posts'
 
 export const mockPosts: Post[] = [
   {
@@ -194,6 +194,6 @@ export function searchPosts(query: string): Post[] {
     (p) =>
       p.title.toLowerCase().includes(lowerQuery) ||
       p.content.toLowerCase().includes(lowerQuery) ||
-      p.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery))
+      p.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery)),
   )
 }
