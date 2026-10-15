@@ -6,10 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - `npm start` — Vite dev server (http://localhost:5173)
 - `npm run build` — `tsc -b && vite build` (type-check is part of the build; the script runs the lockfile policy check first)
-- `npm run check` — `lint` + `typecheck`. **Run this before calling any change done.**
-- `npm run lint` / `npm run lint:fix` — ESLint (flat config, `eslint.config.js`) over `src/**/*.{ts,tsx}`
+- `npm run check` — `biome check` (lint + format) + `typecheck`. **Run this before calling any change done.**
+- `npm run lint` / `npm run lint:fix` — Biome (`biome.json`); `lint:fix` = `biome check --write` (safe fixes + format; import sorting is off by choice). Suppress with `// biome-ignore <rule>: <motivo>`, never blanket-disable
 - `npm run typecheck` — `tsc -b`
-- `npm run format` — Prettier (a hook already formats each file you edit)
+- `npm run format` — Biome formatter for TS/JS/JSON/CSS; HTML and Markdown are intentionally unformatted (a hook already formats each file you edit). Tailwind `@theme` token names must be valid CSS idents (no `--spacing-4.5`): Biome can't parse them, and fractional spacing already comes from `--spacing`
 - No test runner is configured. UI changes are verified by running the app with `VITE_ENABLE_MOCKS=true`.
 
 ## Workflow

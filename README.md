@@ -34,8 +34,7 @@ Aplicação web para blog de código desenvolvida com React 19 e tecnologias mod
 | **Server State**  | [TanStack Query](https://tanstack.com/query)                | 5              |
 | **Roteamento**    | [TanStack Router](https://tanstack.com/router)              | 1 (file-based) |
 | **API Mocking**   | [Mock Service Worker](https://mswjs.io/)                    | 2              |
-| **Linter**        | [ESLint](https://eslint.org/)                               | 9              |
-| **Formatter**     | [Prettier](https://prettier.io/)                            | 3              |
+| **Lint/Format**   | [Biome](https://biomejs.dev/)                               | 2              |
 
 ---
 
@@ -94,11 +93,11 @@ A aplicação estará disponível em `http://localhost:5173`
 | `start`    | `npm start`        | Inicia o servidor de desenvolvimento                 |
 | `build`    | `npm run build`    | Valida o lockfile, compila TypeScript e gera build de produção |
 | `preview`  | `npm run preview`  | Visualiza o build de produção localmente             |
-| `lint`     | `npm run lint`     | Executa o ESLint para verificar problemas no código  |
-| `lint:fix` | `npm run lint:fix` | Executa o ESLint e corrige problemas automaticamente |
+| `lint`     | `npm run lint`     | Executa o linter do Biome                            |
+| `lint:fix` | `npm run lint:fix` | Aplica fixes seguros e formatação (Biome) |
 | `typecheck` | `npm run typecheck` | Verifica os tipos com o TypeScript, sem gerar build |
-| `check`    | `npm run check`    | `lint` + `typecheck`; rodar antes de todo commit     |
-| `format`   | `npm run format`   | Formata o código com Prettier                        |
+| `check`    | `npm run check`    | `biome check` (lint + formatação) + `typecheck`; rodar antes de todo commit |
+| `format`   | `npm run format`   | Formata o código com Biome (TS/JS/JSON/CSS)          |
 | `security:lockfile` | `npm run security:lockfile` | Valida política do lockfile, `package.json` e `.npmrc` |
 | `security:audit` | `npm run security:audit` | `npm audit` (high) + verificação de assinaturas do registry |
 | `security:check` | `npm run security:check` | Lockfile + auditoria |
@@ -120,7 +119,7 @@ O repositório vem configurado para o [Claude Code](https://claude.com/claude-co
 |---|---|
 | `CLAUDE.md` | Contexto do projeto carregado em toda sessão: comandos, arquitetura e fluxo de trabalho |
 | `.claude/settings.json` | Permissões (o que roda sem perguntar, o que pede confirmação, o que é negado) e hooks |
-| `.claude/hooks/` | `format.mjs` formata com Prettier cada arquivo editado; `guard-npm.mjs` bloqueia comandos `npm` que violem a política de dependências |
+| `.claude/hooks/` | `format.mjs` formata com Biome cada arquivo editado; `guard-npm.mjs` bloqueia comandos `npm` que violem a política de dependências |
 | `.claude/rules/` | Convenções por área (dados, UI, rotas), carregadas só quando arquivos daquela área são tocados |
 | `.claude/skills/` | Receitas invocáveis: `/new-endpoint`, `/new-ui-component`, `/add-dependency`, `/spec` |
 | `docs/product.md` | Visão de produto e mapa de funcionalidades |

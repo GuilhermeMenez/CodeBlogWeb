@@ -51,7 +51,7 @@ Se houver suspeita de pacote malicioso:
 - Os controles locais podem ser contornados por quem tem acesso à máquina (ex.: `npm install --ignore-scripts=false`); o enforcement real exige CI + ruleset no GitHub (ver pendências).
 - O `check-lockfile` detecta *técnicas* (origem fora do registry, install scripts novos, dependências via git), não incidentes específicos; versões maliciosas conhecidas são cobertas só pelo `npm audit`, que tem atraso entre a publicação e o advisory.
 - Dependências transitivas atualizadas por `npm update` podem ter menos de 7 dias (pacotes de dados como `caniuse-lite` e `electron-to-chromium` publicam quase todo dia); a regra 2 vale para dependências diretas.
-- `overrides` globais podem quebrar ferramentas (o override de `brace-expansion` para 5.x quebrava o `minimatch@3` do ESLint). Prefira overrides escopados e só quando o `npm audit` exigir.
+- `overrides` globais podem quebrar ferramentas (o override de `brace-expansion` para 5.x quebrava o `minimatch@3` do ESLint, antes da migração para o Biome). Prefira overrides escopados e só quando o `npm audit` exigir.
 
 ## Pendências (alinhar com o admin do repositório)
 
