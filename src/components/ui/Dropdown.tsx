@@ -24,8 +24,7 @@ const dropdownPopupVariants = tv({
 })
 
 export interface DropdownProps
-  extends
-    Omit<ComponentProps<typeof Menu.Root>, 'children'>,
+  extends Omit<ComponentProps<typeof Menu.Root>, 'children'>,
     VariantProps<typeof dropdownPopupVariants> {
   trigger: ReactElement
   children?: ReactNode

@@ -36,8 +36,7 @@ const inputControlVariants = tv({
 })
 
 export interface InputProps
-  extends
-    Omit<ComponentProps<typeof Field.Control>, 'className'>,
+  extends Omit<ComponentProps<typeof Field.Control>, 'className'>,
     VariantProps<typeof inputVariants> {
   label?: string
   className?: string

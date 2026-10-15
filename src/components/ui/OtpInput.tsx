@@ -30,8 +30,7 @@ const otpInputVariants = tv({
 })
 
 export interface OtpInputProps
-  extends
-    Omit<ComponentProps<typeof OTPField.Root>, 'children' | 'length'>,
+  extends Omit<ComponentProps<typeof OTPField.Root>, 'children' | 'length'>,
     VariantProps<typeof otpInputVariants> {
   label?: string
   length?: number
@@ -76,6 +75,7 @@ export function OtpInput({
       >
         {Array.from({ length }, (_, i) => (
           <OTPField.Input
+            // biome-ignore lint/suspicious/noArrayIndexKey: inputs posicionais de tamanho fixo, nunca reordenados
             key={i}
             data-slot="otp-input"
             aria-label={i === 0 ? undefined : `Character ${i + 1} of ${length}`}

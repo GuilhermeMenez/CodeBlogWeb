@@ -38,8 +38,7 @@ const avatarLetterVariants = tv({
 })
 
 export interface AvatarProps
-  extends
-    Omit<ComponentProps<typeof BaseAvatar.Root>, 'children'>,
+  extends Omit<ComponentProps<typeof BaseAvatar.Root>, 'children'>,
     VariantProps<typeof avatarVariants> {
   src?: string
   letter?: string

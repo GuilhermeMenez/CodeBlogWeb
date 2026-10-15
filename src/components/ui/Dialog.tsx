@@ -38,8 +38,7 @@ const dialogContentVariants = tv({
 })
 
 export interface DialogProps
-  extends
-    Omit<ComponentProps<typeof BaseDialog.Root>, 'children'>,
+  extends Omit<ComponentProps<typeof BaseDialog.Root>, 'children'>,
     VariantProps<typeof dialogContentVariants> {
   children?: ReactNode
   showCloseButton?: boolean
