@@ -55,9 +55,11 @@ Antes de começar, certifique-se de ter instalado:
 ### 1. Clone o repositório
 
 ```bash
-git clone <repository-url>
+git clone -c core.autocrlf=input <repository-url>
 cd code-blog-web
 ```
+
+> O projeto usa quebra de linha LF (o Biome falha com CRLF). O `-c core.autocrlf=input` impede que o Git converta para CRLF no Windows. Em um clone já existente: `git config core.autocrlf input`, depois reconverta os arquivos (`git rm --cached -r . && git reset --hard`, com o working tree limpo).
 
 ### 2. Instale as dependências
 
@@ -70,11 +72,14 @@ Para adicionar um pacote: `npm install <pacote>@<x.y.z>` (versão exata; `save-e
 
 ### 3. Configure as variáveis de ambiente
 
-Copie o modelo e ajuste os valores (o `.env` não é versionado):
+Crie um `.env` na raiz (nenhum arquivo `.env` é versionado):
 
 ```bash
-cp .env.example .env
+VITE_API_URL='http://localhost:8080'   # URL do backend
+VITE_ENABLE_MOCKS=true                 # true liga os mocks do MSW (só em dev)
 ```
+
+> Não coloque segredos aqui: toda variável `VITE_*` vai para o bundle do navegador.
 
 ### 4. Inicie o servidor de desenvolvimento
 
@@ -107,7 +112,7 @@ A aplicação estará disponível em `http://localhost:5173`
 ## Segurança de Dependências
 
 - Política, comandos e runbook de incidente: [`docs/security.md`](docs/security.md)
-- Checagem estrutural do lockfile: `check-lockfile.mjs`
+- Checagem estrutural do lockfile: `pglock-check.mjs`
 
 ---
 

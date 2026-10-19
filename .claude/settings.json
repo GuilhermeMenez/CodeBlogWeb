@@ -37,7 +37,7 @@
       "Edit(/package.json)",
       "Edit(/package-lock.json)",
       "Edit(/.npmrc)",
-      "Edit(/check-lockfile.mjs)"
+      "Edit(/pglock-check.mjs)"
     ],
     "deny": [
       "Read(/.env)",

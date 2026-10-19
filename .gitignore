@@ -23,10 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# Environments (.example as a model)
+# Environments (nenhum arquivo .env é versionado)
 .env
 .env.*
-!.env.example
 
 # Claude Code (configuração pessoal)
 .claude/settings.local.json
