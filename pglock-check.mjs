@@ -106,9 +106,9 @@ checkLockfile()
 checkNpmrc()
 
 if (errors.length > 0) {
-  console.error(`check-lockfile: ${errors.length} violação(ões)\n`)
+  console.error(`pglock-check: ${errors.length} violação(ões)\n`)
   for (const error of errors) console.error(`- ${error}`)
   process.exit(1)
 }
 
-console.log('check-lockfile: OK')
+console.log('pglock-check: OK')

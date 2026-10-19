@@ -16,7 +16,7 @@
     "check": "biome check && npm run typecheck",
     "format": "biome format --write",
     "preview": "vite preview",
-    "security:lockfile": "node check-lockfile.mjs",
+    "security:lockfile": "node pglock-check.mjs",
     "security:audit": "npm audit --audit-level=high && npm audit signatures",
     "security:check": "npm run security:lockfile && npm run security:audit"
   },

@@ -112,7 +112,7 @@ A aplicação estará disponível em `http://localhost:5173`
 ## Segurança de Dependências
 
 - Política, comandos e runbook de incidente: [`docs/security.md`](docs/security.md)
-- Checagem estrutural do lockfile: `check-lockfile.mjs`
+- Checagem estrutural do lockfile: `pglock-check.mjs`
 
 ---
 

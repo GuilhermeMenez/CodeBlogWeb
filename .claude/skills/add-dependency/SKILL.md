@@ -23,7 +23,7 @@ npm view <pacote>@<versão> dist.integrity scripts dependencies
 ```
 
 - **Regra dos 7 dias**: escolha a versão estável mais recente publicada há 7 dias ou mais. A exceção é correção de vulnerabilidade já divulgada — nesse caso, cite o advisory.
-- Se o pacote declarar `preinstall`, `install` ou `postinstall`, **pare e avise**: ele precisará entrar na allowlist de `check-lockfile.mjs`, o que exige revisão do pacote e PR separado.
+- Se o pacote declarar `preinstall`, `install` ou `postinstall`, **pare e avise**: ele precisará entrar na allowlist de `pglock-check.mjs`, o que exige revisão do pacote e PR separado.
 - Olhe as dependências transitivas que ele traz; muitas dependências novas para pouco ganho é motivo para reconsiderar.
 
 ## 3. Instalar
