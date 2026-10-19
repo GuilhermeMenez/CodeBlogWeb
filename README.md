@@ -72,11 +72,14 @@ Para adicionar um pacote: `npm install <pacote>@<x.y.z>` (versão exata; `save-e
 
 ### 3. Configure as variáveis de ambiente
 
-Copie o modelo e ajuste os valores (o `.env` não é versionado):
+Crie um `.env` na raiz (nenhum arquivo `.env` é versionado):
 
 ```bash
-cp .env.example .env
+VITE_API_URL='http://localhost:8080'   # URL do backend
+VITE_ENABLE_MOCKS=true                 # true liga os mocks do MSW (só em dev)
 ```
+
+> Não coloque segredos aqui: toda variável `VITE_*` vai para o bundle do navegador.
 
 ### 4. Inicie o servidor de desenvolvimento
 

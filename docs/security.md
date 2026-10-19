@@ -13,7 +13,7 @@ Política de dependências, runbook de incidente e pendências de infraestrutura
 | Auditoria | `npm audit --audit-level=high` | Advisories do GHSA, incluindo malware |
 | Assinaturas | `npm audit signatures` | Valida assinatura e provenance do registry |
 | Guarda no Claude Code | `.claude/hooks/guard-npm.mjs` + `.claude/settings.json` | Em sessões de IA: bloqueia `npm install` sem versão exata (ou via git/URL) e qualquer tentativa de desativar `ignore-scripts`; pede confirmação para editar `package.json`, lockfile, `.npmrc` e `check-lockfile.mjs`. Não substitui a revisão humana |
-| Segredos fora do git | `.gitignore` (`.env`, `.env.*`) + `.env.example` | `.env` não é versionado |
+| `.env` fora do git | `.gitignore` (`.env`, `.env.*`) | Nenhum arquivo `.env` é versionado; as variáveis estão documentadas no README |
 
 ## Comandos
 
@@ -33,7 +33,7 @@ Sem CI, nada bloqueia um merge ruim; a proteção depende destas regras:
 2. Só adotar versão de **dependência direta** publicada há 7+ dias (`npm view <pacote> time`), exceto correção de vulnerabilidade já divulgada.
 3. Mudanças em `package.json`, `package-lock.json`, `.npmrc` e `check-lockfile.mjs` exigem revisão de outra pessoa.
 4. Nunca instalar com `--ignore-scripts=false` nem alterar `ignore-scripts` no `.npmrc`.
-5. Não versionar `.env`; configuração nova entra em `.env.example`.
+5. Não versionar nenhum arquivo `.env`; variável nova é documentada no README. Segredos ficam no backend, nunca em variável `VITE_*` (vai para o bundle).
 
 ## Resposta a incidente
 

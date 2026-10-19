@@ -38,7 +38,7 @@ LF everywhere (`biome.json` `lineEnding: "lf"`). There is no `.gitattributes` by
 
 ## Environment
 
-`.env` is git-ignored; copy `.env.example`. Vars: `VITE_API_URL` (backend base URL) and `VITE_ENABLE_MOCKS` (`'true'` starts the MSW browser worker, dev only — see `src/main.tsx`).
+No `.env*` file is ever versioned (git-ignored; no `.env.example`): new vars are documented in the README's setup step. Vars: `VITE_API_URL` (backend base URL) and `VITE_ENABLE_MOCKS` (`'true'` starts the MSW browser worker, dev only — see `src/main.tsx`).
 
 ## Architecture
 
@@ -51,14 +51,10 @@ React 19 + TypeScript (strict, `erasableSyntaxOnly`, `verbatimModuleSyntax` → 
 - `src/hooks/*`: TanStack Query wrappers. Auth hooks own token persistence (`localStorage`), seed the `queryKeys.auth.me()` cache on login/register, and handle navigation (`/feed` after login, `/` after logout, which also clears the whole query cache).
 - `src/lib/query-client.ts`: the `QueryClient` defaults (retry only on 408/429/5xx/network, once) and the central `queryKeys` factory — add new keys there rather than inlining arrays.
 
-### Routing
-TanStack Router, file-based, in `src/pages` (not `routes`). Configured in `vite.config.ts` with `routeToken: 'layout'` (so `layout.tsx` is the layout file, not `route.tsx`) and generated tree at `src/route-tree.gen.ts` (auto-generated; don't edit). Folders prefixed with `-` (e.g. `-components/`) are ignored by the router and hold page-local components. Groups: `_auth` (landing/sign-in/up), `_app` (authenticated shell: `feed`, `me/*`, `$writer/$postId`), plus `design-system`.
-
-### Mocking
-`src/mocks` has MSW handlers per domain (`auth`, `posts`, `users`), in-memory data in `mocks/data`, and `browser.ts`/`server.ts` setups. Add a handler when adding an endpoint so the app works with `VITE_ENABLE_MOCKS=true`.
-
-### UI components
-`src/components/ui/*` wrap `@base-ui/react` headless primitives, styled with `tailwind-variants` (`tv`) and merged with `tailwind-merge`. Conventions (from README): no `forwardRef` (React 19 ref-as-prop), props extend `ComponentProps<'el'>` + `VariantProps`, state styling via `data-*` attributes (e.g. `data-disabled`), design tokens via Tailwind v4 `@theme` CSS variables in `src/index.css`. Icons are components in `src/assets/icons/` named `XxxIcon.tsx`.
+### Routing, mocking, UI
+- Routing: TanStack Router, file-based in `src/pages` (not `routes`); groups `_auth` (public) and `_app` (authenticated shell). Details: `.claude/rules/routing.md`.
+- Mocking: MSW handlers per domain in `src/mocks`; every endpoint needs one so the app works with `VITE_ENABLE_MOCKS=true`. Details: `.claude/rules/data-layer.md`.
+- UI: `src/components/ui/*` wrap `@base-ui/react` primitives styled with `tailwind-variants` + `tailwind-merge`; tokens in `@theme` (`src/index.css`). Details: `.claude/rules/ui-components.md`.
 
 ### Naming
 Components/icons `PascalCase.tsx`; hooks `useCamelCase.ts`; api/lib/mocks/utils `kebab-case.ts`; planned `*.types.ts`, `*.enums.ts`, `*.constants.ts` in `types/`, `enums/`, `constants/`.
