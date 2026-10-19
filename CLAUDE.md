@@ -33,6 +33,9 @@ When a decision becomes a lasting convention, record it in the matching rule fil
 - Dependencies are pinned to exact versions; keep it that way. Don't add `preinstall`/`postinstall`/`prepare` scripts (the check fails on them).
 - Changes to `package.json`, `package-lock.json`, `.npmrc` and `check-lockfile.mjs` need review by the other dev: keep them in their own commit and call them out. A `PreToolUse` hook (`.claude/hooks/guard-npm.mjs`) blocks installs without an exact version and any attempt to disable `ignore-scripts`.
 
+### Line endings
+LF everywhere (`biome.json` `lineEnding: "lf"`). There is no `.gitattributes` by choice: each clone must set `git config core.autocrlf input` (see README), otherwise Windows checkouts get CRLF and `biome check` fails.
+
 ## Environment
 
 `.env` is git-ignored; copy `.env.example`. Vars: `VITE_API_URL` (backend base URL) and `VITE_ENABLE_MOCKS` (`'true'` starts the MSW browser worker, dev only — see `src/main.tsx`).

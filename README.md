@@ -55,9 +55,11 @@ Antes de começar, certifique-se de ter instalado:
 ### 1. Clone o repositório
 
 ```bash
-git clone <repository-url>
+git clone -c core.autocrlf=input <repository-url>
 cd code-blog-web
 ```
+
+> O projeto usa quebra de linha LF (o Biome falha com CRLF). O `-c core.autocrlf=input` impede que o Git converta para CRLF no Windows. Em um clone já existente: `git config core.autocrlf input`, depois reconverta os arquivos (`git rm --cached -r . && git reset --hard`, com o working tree limpo).
 
 ### 2. Instale as dependências
 
